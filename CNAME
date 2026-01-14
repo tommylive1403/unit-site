@@ -1,1 +1,4 @@
-sobaki-shukaki.army
+Type: CNAME
+Name: www
+Value: username.github.io
+TTL: Auto
