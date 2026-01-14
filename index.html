@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Собаки Шукаки</title>
+  <meta name="description" content="Сайт підрозділу" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="fx-noise" aria-hidden="true"></canvas>
+  <a class="skip" href="#main">Перейти до контенту</a>
+
+  <header class="header" id="top">
+    <div class="header__inner">
+      <a class="brand" href="#top" aria-label="На початок">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">СОБАКИ ШУКАКИ</span>
+      </a>
+
+      <nav class="nav" aria-label="Головне меню">
+        <a href="#about">Про підрозділ</a>
+        <a href="#values">Цінності</a>
+        <a href="#donate">Донати</a>
+      </nav>
+
+      <div class="header__right">
+        <a class="header__phone" href="#" aria-label="Телефон (плейсхолдер)">+38 000 000 0000</a>
+
+        <button class="burger" type="button" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mnav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mnav" id="mnav" hidden>
+      <div class="mnav__inner">
+        <a class="mnav__item" href="#about">Про підрозділ</a>
+        <a class="mnav__item" href="#values">Цінності</a>
+        <a class="mnav__item" href="#donate">Донати</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" aria-label="Головний блок">
+      <div class="hero__bg" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <p class="hero__kicker">Підрозділ безпілотних систем</p>
+
+        <!-- Поклади логотип у: media/logo.png -->
+        <img class="hero__logo" src="media/logo.png" alt="Собаки Шукаки" />
+
+        <div class="socialRow socialRow--hero" aria-label="Соціальні мережі">
+          <a class="iconCircle" href="#" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/>
+              <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+              <path d="M18 6.2a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
+            </svg>
+          </a>
+
+          <a class="iconCircle" href="#" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M13.5 22v-8h2.7l.4-3H13.5V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.7-.1-1.6-.2-2.7-.2-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.5v8h4z"/>
+            </svg>
+          </a>
+
+          <a class="iconCircle" href="#" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21.8 8.3a3 3 0 0 0-2.1-2.1C18 5.7 12 5.7 12 5.7s-6 0-7.7.5A3 3 0 0 0 2.2 8.3 31 31 0 0 0 1.7 12c0 1.2.2 2.5.5 3.7a3 3 0 0 0 2.1 2.1c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a3 3 0 0 0 2.1-2.1c.3-1.2.5-2.5.5-3.7s-.2-2.5-.5-3.7zM10.4 15.2V8.8L15.9 12l-5.5 3.2z"/>
+            </svg>
+          </a>
+
+          <a class="iconCircle" href="#" aria-label="X" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M18.7 2H22l-7.2 8.2L23 22h-6.6l-5.2-6.7L5.2 22H2l7.8-8.9L1 2h6.8l4.7 6.1L18.7 2zm-1.1 18h1.9L6.7 3.9H4.6L17.6 20z"/>
+            </svg>
+          </a>
+
+          <a class="iconCircle" href="#" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M16.5 3c.6 2.7 2.3 4.4 5 5v3.4c-1.9.1-3.6-.5-5.1-1.6v6.8c0 4-3.2 7.2-7.2 7.2S2 20.6 2 16.6s3.2-7.2 7.2-7.2c.4 0 .8 0 1.2.1v3.8c-.4-.1-.8-.2-1.2-.2-2 0-3.5 1.6-3.5 3.5S7.3 20 9.2 20s3.5-1.6 3.5-3.5V3h3.8z"/>
+            </svg>
+          </a>
+
+          <a class="iconCircle" href="#" aria-label="Telegram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21.6 4.6 3.4 11.6c-1 .4-.9 1.8.2 2.1l4.3 1.3 1.6 5.1c.3 1 1.6 1.2 2.2.4l2.5-3 4.7 3.5c.8.6 1.9.1 2.1-.9l2.9-14.1c.2-1-.8-1.9-1.8-1.4zM9.3 14.6l8.6-7.1c.2-.2.6.1.4.3l-7.2 8.1-.3 3.2-1.4-4.5z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ПРО ПІДРОЗДІЛ -->
+    <section id="about" class="section">
+      <div class="container">
+        <article class="panel panel--about">
+          <div class="panel__line"></div>
+          <h2 class="panel__title">ПРО ПІДРОЗДІЛ</h2>
+
+          <div class="panel__text">
+            <p class="lead"><strong>Коротко про нас (плейсхолдер)</strong> — 1–2 абзаци загального опису.</p>
+            <p><strong>Головні завдання:</strong> плейсхолдер-опис. Без деталей, які не можна публікувати.</p>
+          </div>
+
+          <h3 class="panel__h3">МЕДІА ПРО НАС</h3>
+
+          <div class="mediaRail" data-rail>
+
+            <div class="mediaRow" role="list">
+              <a class="mediaCard" role="listitem" href="#" target="_blank" rel="noopener">
+                <img src="media/zrzut.png" alt="zrzutka.pl">
+                <div class="mediaCard__title">zrzutka.pl</div>
+              </a>
+
+              <a class="mediaCard" role="listitem" href="#" target="_blank" rel="noopener">
+                <img src="media/Inf.png" alt="АрміяInform">
+                <div class="mediaCard__title">АрміяInform</div>
+              </a>
+
+              <a class="mediaCard" role="listitem" href="#" target="_blank" rel="noopener">
+                <img src="media/ЦензорНЕТ.png" alt="Цензор.НЕТ">
+                <div class="mediaCard__title">Цензор.НЕТ</div>
+              </a>
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- НАШ КОМАНДИР -->
+    <section id="commander" class="section section--tightTop">
+      <div class="container">
+        <article class="panel panel--commander">
+          <div class="panel__line"></div>
+          <h2 class="panel__title">НАШ КОМАНДИР</h2>
+
+          <div class="commanderGrid">
+            <div class="commanderGrid__photo">
+              <div class="ph ph--portrait">ФОТО</div>
+            </div>
+
+            <div class="commanderGrid__text">
+              <h3 class="commanderGrid__name">Імʼя / позивний (плейсхолдер)</h3>
+              <p class="muted">Короткий опис (плейсхолдер). Без чутливих деталей.</p>
+              <p>Довший текст (плейсхолдер) — за потреби.</p>
+            </div>
+          </div>
+
+          <div class="commanderMore">
+            <p class="muted">Додатковий абзац (плейсхолдер).</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ЦІННОСТІ -->
+    <section id="values" class="section">
+      <div class="container">
+        <article class="panel panel--values">
+          <div class="panel__line"></div>
+          <h2 class="panel__title">ЦІННОСТІ (ПЛЕЙСХОЛДЕР)</h2>
+          <p class="panel__sub">Коротке пояснення (плейсхолдер).</p>
+
+          <div class="valuesList">
+            <div class="valuesRow">
+              <div class="valuesRow__num">01</div>
+              <div class="valuesRow__body">
+                <div class="valuesRow__title">НАЗВА ЦІННОСТІ</div>
+                <div class="valuesRow__desc">Коротке пояснення (плейсхолдер).</div>
+              </div>
+            </div>
+
+            <div class="valuesRow">
+              <div class="valuesRow__num">02</div>
+              <div class="valuesRow__body">
+                <div class="valuesRow__title">НАЗВА ЦІННОСТІ</div>
+                <div class="valuesRow__desc">Коротке пояснення (плейсхолдер).</div>
+              </div>
+            </div>
+
+            <div class="valuesRow">
+              <div class="valuesRow__num">03</div>
+              <div class="valuesRow__body">
+                <div class="valuesRow__title">НАЗВА ЦІННОСТІ</div>
+                <div class="valuesRow__desc">Коротке пояснення (плейсхолдер).</div>
+              </div>
+            </div>
+
+            <div class="valuesRow">
+              <div class="valuesRow__num">04</div>
+              <div class="valuesRow__body">
+                <div class="valuesRow__title">НАЗВА ЦІННОСТІ</div>
+                <div class="valuesRow__desc">Коротке пояснення (плейсхолдер).</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ДОПОМОГА -->
+    <section id="donate" class="section">
+      <div class="container">
+        <article class="panel panel--donate">
+          <div class="panel__line"></div>
+          <h2 class="panel__title">ДОПОМОГА ПІДРОЗДІЛУ</h2>
+          <p class="panel__sub">Оберіть зручний спосіб підтримки.</p>
+
+          <div class="donate2">
+            <div class="payCard">
+              <div class="payCard__top">
+                <div class="payCard__icon" aria-hidden="true">▢</div>
+                <div>
+                  <div class="payCard__title">Монобанка</div>
+                  <div class="payCard__desc muted">Картка та IBAN для переказу.</div>
+                </div>
+              </div>
+
+              <div class="payLine">
+                <div class="payLine__k">Картка:</div>
+                <div class="payLine__v"><code>5375 4112 0298 2067</code></div>
+                <button class="copy sm" type="button" data-copy="5375 4112 0298 2067">Копіювати</button>
+              </div>
+
+              <div class="payLine">
+                <div class="payLine__k">IBAN:</div>
+                <div class="payLine__v"><code>UA27 322001 00000 2620 7334 6683 70</code></div>
+                <button class="copy sm" type="button" data-copy="UA27 322001 00000 2620 7334 6683 70">Копіювати</button>
+              </div>
+
+              <a class="btn btn--primary btn--wide" href="https://send.monobank.ua/jar/4g2vud36xP" target="_blank" rel="noopener">Постійна банка</a>
+            </div>
+
+            <div class="payCard">
+              <div class="payCard__top">
+                <div class="payCard__icon" aria-hidden="true">₿</div>
+                <div>
+                  <div class="payCard__title">Крипта</div>
+                  <div class="payCard__desc muted">USDT TRC20.</div>
+                </div>
+              </div>
+
+              <div class="payLine">
+                <div class="payLine__k">USDT:</div>
+                <div class="payLine__v"><code>TCJjyNGFQf6fz8Rg4yBBNBPxCtodDkrj6w</code></div>
+                <button class="copy sm" type="button" data-copy="TCJjyNGFQf6fz8Rg4yBBNBPxCtodDkrj6w">Копіювати</button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="joinSocial">
+            <div class="joinSocial__title">Доєднуйтесь до нас в соціальних мережах</div>
+            <div class="socialRow socialRow--big">
+              <a class="iconCircle iconCircle--big" href="#" aria-label="Instagram" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/>
+                  <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+                  <path d="M18 6.2a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
+                </svg>
+              </a>
+
+              <a class="iconCircle iconCircle--big" href="#" aria-label="Facebook" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M13.5 22v-8h2.7l.4-3H13.5V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.7-.1-1.6-.2-2.7-.2-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.5v8h4z"/>
+                </svg>
+              </a>
+
+              <a class="iconCircle iconCircle--big" href="#" aria-label="YouTube" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M21.8 8.3a3 3 0 0 0-2.1-2.1C18 5.7 12 5.7 12 5.7s-6 0-7.7.5A3 3 0 0 0 2.2 8.3 31 31 0 0 0 1.7 12c0 1.2.2 2.5.5 3.7a3 3 0 0 0 2.1 2.1c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a3 3 0 0 0 2.1-2.1c.3-1.2.5-2.5.5-3.7s-.2-2.5-.5-3.7zM10.4 15.2V8.8L15.9 12l-5.5 3.2z"/>
+                </svg>
+              </a>
+
+              <a class="iconCircle iconCircle--big" href="#" aria-label="X" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M18.7 2H22l-7.2 8.2L23 22h-6.6l-5.2-6.7L5.2 22H2l7.8-8.9L1 2h6.8l4.7 6.1L18.7 2zm-1.1 18h1.9L6.7 3.9H4.6L17.6 20z"/>
+                </svg>
+              </a>
+
+              <a class="iconCircle iconCircle--big" href="#" aria-label="TikTok" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M16.5 3c.6 2.7 2.3 4.4 5 5v3.4c-1.9.1-3.6-.5-5.1-1.6v6.8c0 4-3.2 7.2-7.2 7.2S2 20.6 2 16.6s3.2-7.2 7.2-7.2c.4 0 .8 0 1.2.1v3.8c-.4-.1-.8-.2-1.2-.2-2 0-3.5 1.6-3.5 3.5S7.3 20 9.2 20s3.5-1.6 3.5-3.5V3h3.8z"/>
+                </svg>
+              </a>
+
+              <a class="iconCircle iconCircle--big" href="#" aria-label="Telegram" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M21.6 4.6 3.4 11.6c-1 .4-.9 1.8.2 2.1l4.3 1.3 1.6 5.1c.3 1 1.6 1.2 2.2.4l2.5-3 4.7 3.5c.8.6 1.9.1 2.1-.9l2.9-14.1c.2-1-.8-1.9-1.8-1.4zM9.3 14.6l8.6-7.1c.2-.2.6.1.4.3l-7.2 8.1-.3 3.2-1.4-4.5z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">Собаки Шукаки</div>
+      <div class="footer__meta">© <span id="y"></span> Усі права захищено.
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
