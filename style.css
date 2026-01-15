@@ -543,36 +543,3 @@ body::after{
 @media (max-width: 640px){
   #fx-noise{ opacity: .16; }
 }
-/* HERO social icons — hover effect */
-.socialRow--hero .iconCircle{
-  transition:
-    transform .25s ease,
-    background-color .25s ease,
-    border-color .25s ease,
-    box-shadow .25s ease,
-    opacity .25s ease;
-}
-
-/* hover / focus */
-.socialRow--hero .iconCircle:hover,
-.socialRow--hero .iconCircle:focus-visible{
-  transform: translateY(-2px);
-  background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.55);
-  box-shadow:
-    0 8px 22px rgba(0,0,0,.45),
-    0 0 0 1px rgba(255,255,255,.15);
-}
-
-/* іконка всередині — трохи чіткіша */
-.socialRow--hero .iconCircle:hover svg,
-.socialRow--hero .iconCircle:focus-visible svg{
-  opacity: 1;
-}
-
-/* active (tap) */
-.socialRow--hero .iconCircle:active{
-  transform: translateY(0);
-  box-shadow:
-    0 4px 12px rgba(0,0,0,.45);
-}
