@@ -13,12 +13,12 @@
       try {
         await navigator.clipboard.writeText(text);
         const prev = btn.textContent;
-        btn.textContent = "✓ Скопійовано";
-        btn.style.background = "rgba(0, 180, 80, 0.3)";
+        btn.textContent = "✔";
+        btn.classList.add("copied");
         setTimeout(() => {
           btn.textContent = prev;
-          btn.style.background = "";
-        }, 1500);
+          btn.classList.remove("copied");
+        }, 1200);
       } catch {
         // fallback
         const ta = document.createElement("textarea");
@@ -29,6 +29,13 @@
         ta.select();
         document.execCommand("copy");
         ta.remove();
+        const prev = btn.textContent;
+        btn.textContent = "✔";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.classList.remove("copied");
+        }, 1200);
       }
     });
   });
