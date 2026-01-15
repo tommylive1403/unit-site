@@ -83,7 +83,7 @@
     
     elements.forEach((el) => {
       const elementTop = el.getBoundingClientRect().top;
-      const elementVisible = 100;
+      const elementVisible = 150;
       
       if (elementTop < windowHeight - elementVisible) {
         el.classList.add("animated");
@@ -92,8 +92,13 @@
   };
   
   window.addEventListener("scroll", animateOnScroll, { passive: true });
-  // Trigger on load
+  // Trigger on load - multiple times to ensure all visible elements animate
+  animateOnScroll();
   setTimeout(animateOnScroll, 100);
+  setTimeout(animateOnScroll, 300);
+  
+  // Also trigger when DOM is fully ready
+  document.addEventListener("DOMContentLoaded", animateOnScroll);
 
 })();
 
