@@ -543,3 +543,57 @@ body::after{
 @media (max-width: 640px){
   #fx-noise{ opacity: .16; }
 }
+/* HERO center social icons (instead of dots) */
+.socialRow--heroCenter{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  opacity:.85;
+}
+
+.socialRow--heroCenter .iconCircle{
+  width:42px;
+  height:42px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.25);
+}
+
+.socialRow--heroCenter .iconCircle svg{
+  width:20px;
+  height:20px;
+}
+
+/* hover — спокійний, військовий */
+.socialRow--heroCenter .iconCircle{
+  transition:
+    transform .25s ease,
+    background-color .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease,
+    opacity .25s ease;
+}
+
+.socialRow--heroCenter .iconCircle:hover,
+.socialRow--heroCenter .iconCircle:focus-visible{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.55);
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.15);
+  opacity:1;
+}
+
+/* mobile — трохи компактніше */
+@media (max-width: 767px){
+  .socialRow--heroCenter{
+    gap:16px;
+    margin-top:22px;
+  }
+  .socialRow--heroCenter .iconCircle{
+    width:38px;
+    height:38px;
+  }
+}
