@@ -625,11 +625,17 @@ img{max-width:100%;display:block}
 /* Scroll animations */
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
 .animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Initial visibility fix - show content that's in view on load */
+.section:first-of-type .animate-on-scroll {
   opacity: 1;
   transform: translateY(0);
 }
