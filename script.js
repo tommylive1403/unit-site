@@ -2,7 +2,7 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  // Year
+  // Year in footer
   const y = $("#y");
   if (y) y.textContent = String(new Date().getFullYear());
 
@@ -13,8 +13,12 @@
       try {
         await navigator.clipboard.writeText(text);
         const prev = btn.textContent;
-        btn.textContent = "Скопійовано";
-        setTimeout(() => (btn.textContent = prev), 900);
+        btn.textContent = "✓ Скопійовано";
+        btn.style.background = "rgba(0, 180, 80, 0.3)";
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.style.background = "";
+        }, 1500);
       } catch {
         // fallback
         const ta = document.createElement("textarea");
@@ -29,28 +33,71 @@
     });
   });
 
-  // Media rail arrows
-  $$("[data-rail]").forEach((rail) => {
-    const row = $(".mediaRow", rail);
-    const left = $(".railArrow--left", rail);
-    const right = $(".railArrow--right", rail);
-    if (!row) return;
+  // Header scroll effect
+  const header = $(".header");
+  const handleHeaderScroll = () => {
+    if (window.scrollY > 50) {
+      header?.classList.add("scrolled");
+    } else {
+      header?.classList.remove("scrolled");
+    }
+  };
+  window.addEventListener("scroll", handleHeaderScroll, { passive: true });
+  handleHeaderScroll();
 
-    const step = () => {
-      const card = $(".mediaCard", row);
-      const w = card ? card.getBoundingClientRect().width : 280;
-      return w + 18;
-    };
-
-    left?.addEventListener("click", () =>
-      row.scrollBy({ left: -step(), behavior: "smooth" })
-    );
-    right?.addEventListener("click", () =>
-      row.scrollBy({ left: step(), behavior: "smooth" })
-    );
+  // Scroll to top button
+  const scrollTopBtn = $("#scrollTop");
+  const handleScrollTopVisibility = () => {
+    if (window.scrollY > 400) {
+      scrollTopBtn?.classList.add("visible");
+    } else {
+      scrollTopBtn?.classList.remove("visible");
+    }
+  };
+  window.addEventListener("scroll", handleScrollTopVisibility, { passive: true });
+  
+  scrollTopBtn?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
+
+  // Smooth scroll for navigation links
+  $$("a[href^='#']").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      if (href && href !== "#") {
+        const target = $(href);
+        if (target) {
+          e.preventDefault();
+          const headerHeight = header?.offsetHeight || 68;
+          const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+          window.scrollTo({ top: targetPosition, behavior: "smooth" });
+        }
+      }
+    });
+  });
+
+  // Animate on scroll
+  const animateOnScroll = () => {
+    const elements = $$(".animate-on-scroll");
+    const windowHeight = window.innerHeight;
+    
+    elements.forEach((el) => {
+      const elementTop = el.getBoundingClientRect().top;
+      const elementVisible = 100;
+      
+      if (elementTop < windowHeight - elementVisible) {
+        el.classList.add("animated");
+      }
+    });
+  };
+  
+  window.addEventListener("scroll", animateOnScroll, { passive: true });
+  // Trigger on load
+  setTimeout(animateOnScroll, 100);
+
 })();
 
+// WebGL-style noise effect
 (() => {
   const c = document.getElementById("fx-noise");
   if (!c) return;
@@ -60,10 +107,9 @@
     h = 0,
     dpr = 1;
 
-  // “WebGL-ish”: дрібний шум + легка анімація (як shader time)
-  const NOISE_SCALE = 1.1; // 1.0 = дуже дрібний; 1.4 = трохи крупніший
-  const FPS = 18; // менше FPS = більш “кінематографічно” і легше
-  const STRENGTH = 32; // інтенсивність зерна (0..255). 32-40 зазвичай ідеально
+  const NOISE_SCALE = 1.1;
+  const FPS = 18;
+  const STRENGTH = 28;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -76,7 +122,6 @@
   }
 
   function render(t) {
-    // робимо “tile” шуму і масштабуємо на весь екран — як у шейдері
     const tw = Math.max(
       180,
       Math.floor((innerWidth * dpr) / (3 * NOISE_SCALE))
@@ -89,32 +134,28 @@
     const img = ctx.createImageData(tw, th);
     const data = img.data;
 
-    // псевдо-рандом, стабільний по кадрам (як зерно плівки)
     let seed = (t * 0.001) % 1000;
     const rnd = () => {
       seed = (seed * 9301 + 49297) % 233280;
       return seed / 233280;
     };
 
-    // monochrome grain
     for (let i = 0; i < data.length; i += 4) {
       const n = (rnd() - 0.5) * STRENGTH;
       const v = 128 + n;
 
-      data[i] = v; // R
-      data[i + 1] = v; // G
-      data[i + 2] = v; // B
-      data[i + 3] = 255; // A
+      data[i] = v;
+      data[i + 1] = v;
+      data[i + 2] = v;
+      data[i + 3] = 255;
     }
 
-    // очищення + drift
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, w, h);
 
     const driftX = Math.sin(t * 0.0007) * 6 * dpr;
     const driftY = Math.cos(t * 0.0009) * 6 * dpr;
 
-    // tmp canvas -> pattern
     const tmp = document.createElement("canvas");
     tmp.width = tw;
     tmp.height = th;
