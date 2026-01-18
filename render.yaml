@@ -13,4 +13,4 @@ projects:
       region: virginia
       buildCommand: yarn
       startCommand: go
-      autoDeployTrigger: "off"
+      autoDeployTrigger: "on"
