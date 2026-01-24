@@ -126,14 +126,14 @@ img{max-width:100%;display:block}
   opacity: 0.8;
 }
 .brand__logo {
-  height: 42px;
+  height: 46px;
   width: auto;
   object-fit: contain;
 }
 .brand__name{
   color:#fff;
   text-transform:uppercase;
-  font-size:14px;
+  font-size:18px;
   line-height:18px;
   letter-spacing:0.14em;
   font-weight:700;
@@ -148,7 +148,7 @@ img{max-width:100%;display:block}
 .nav a{
   color:#fff;
   font-weight:600;
-  font-size:12px;
+  font-size:16px;
   line-height:16px;
   letter-spacing:0.14em;
   text-transform:uppercase;
@@ -260,7 +260,7 @@ img{max-width:100%;display:block}
   color:rgba(255,255,255,.88);
   font-weight:700;
   letter-spacing:0.16em;
-  font-size:14px;
+  font-size:16px;
   line-height:18px;
   text-transform:uppercase;
   display:flex;
@@ -318,7 +318,7 @@ img{max-width:100%;display:block}
    ========================================================= */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
-  padding:14px 24px;border-radius:999px;
+  padding:12px 22px;border-radius:999px;
   font-weight:700;letter-spacing:1px;
   text-transform:uppercase;font-size:12px;
   border:1px solid rgba(255,255,255,.16);
@@ -528,7 +528,7 @@ img{max-width:100%;display:block}
   background:transparent;
   color:rgba(255,255,255,.7);
   font-weight:500;
-  font-size:12px;
+  font-size:10px;
   cursor:pointer;
   transition: all 0.2s ease;
   display: inline-flex;
