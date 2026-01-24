@@ -13,4 +13,8 @@ projects:
       region: virginia
       buildCommand: yarn
       startCommand: go
+<<<<<<< HEAD
       autoDeployTrigger: "on"
+=======
+      autoDeployTrigger: "off"
+>>>>>>> bb247a3d54b1daf08f500efa8bfa0c48e4e5b126
