@@ -405,53 +405,53 @@
   <script>
     // ====== Налаштування збору: міняєш ТУТ (1 місце) ======
     <script>
+<script>
   const DATA_URL = "/donaty/donaty.json";
 
   const fmt = (n) =>
     new Intl.NumberFormat("uk-UA").format(Math.round(n)) + " грн";
 
-  fetch(DATA_URL, { cache: "no-store" })
-    .then(r => {
-      if (!r.ok) throw new Error("JSON not found");
-      return r.json();
-    })
-    .then(data => {
+  async function loadDonation() {
+    try {
+      const r = await fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" });
+      if (!r.ok) throw new Error("JSON not found: " + r.status);
+      const data = await r.json();
+
       // Текст
-      document.getElementById("titleText").textContent = data.title;
+      const titleEl = document.getElementById("titleText");
+      if (titleEl) titleEl.textContent = data.title || "Збір активний";
 
       // Суми
-      document.getElementById("goalUah").textContent = fmt(data.goal);
-      document.getElementById("raisedUah").textContent = fmt(data.raised);
+      const goalEl = document.getElementById("goalUah");
+      const raisedEl = document.getElementById("raisedUah");
+      if (goalEl) goalEl.textContent = fmt(data.goal || 0);
+      if (raisedEl) raisedEl.textContent = fmt(data.raised || 0);
 
       // Прогрес
-      const pct = Math.max(
-        0,
-        Math.min(100, (data.raised / data.goal) * 100 || 0)
-      );
+      const pctRaw = (data.goal > 0) ? (data.raised / data.goal) * 100 : 0;
+      const pct = Math.max(0, Math.min(100, pctRaw || 0));
 
-      document.getElementById("pct").textContent =
-        pct < 10 ? pct.toFixed(1) : pct.toFixed(0);
+      const pctEl = document.getElementById("pct");
+      if (pctEl) pctEl.textContent = (pct < 10 ? pct.toFixed(1) : pct.toFixed(0));
 
-      document.getElementById("fill").style.width =
-        pct.toFixed(2) + "%";
+      const fill = document.getElementById("fill");
+      if (fill) fill.style.width = pct.toFixed(2) + "%";
 
       const bar = document.querySelector(".bar[role='progressbar']");
       if (bar) bar.setAttribute("aria-valuenow", pct.toFixed(0));
 
       // Кнопка Mono
       const monoBtn = document.getElementById("monoBtn");
-      monoBtn.href = data.mono_url;
+      if (monoBtn && data.mono_url) monoBtn.href = data.mono_url;
 
-      // (опційно) показати коли оновлено
-      if (data.updated_at) {
-        console.log("Оновлено:", data.updated_at);
-      }
-    })
-    .catch(err => {
-      console.error("Не вдалося завантажити дані збору", err);
-      document.getElementById("titleText").textContent =
-        "Збір тимчасово недоступний";
-    });
+    } catch (e) {
+      console.error("Donation load error:", e);
+      const titleEl = document.getElementById("titleText");
+      if (titleEl) titleEl.textContent = "Збір тимчасово недоступний";
+    }
+  }
+
+  loadDonation();
 </script>
 
     // Заповнення UI
