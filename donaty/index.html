@@ -217,6 +217,15 @@
       .monoCard{ padding: 16px 14px 14px; border-radius: 20px; }
       .monoLogo{ width: min(280px, 70vw); }
     }
+	html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
   </style>
 </head>
 
@@ -234,7 +243,7 @@
     </div>
   </header>
 
-  <main class="d-wrap">
+  <main class="d-wrap fullscreen">
     <div class="monoGrid">
       <img class="monoLogo" src="/logo.png" alt="Собаки Шукаки">
 
