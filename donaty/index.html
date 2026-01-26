@@ -12,387 +12,353 @@
   <meta property="og:url" content="/donaty" />
   <meta property="og:image" content="/og-cover.jpg" />
 
+  <!-- Твій загальний стиль залишаємо (хедер/шрифти), але картку робимо окремою -->
   <link rel="stylesheet" href="/style.css" />
 
   <style>
-    /* Легкий окремий дизайн сторінки збору (мінімально, без ламання сайту) */
+    /* ===== Mono-like page (light card, like screenshot) ===== */
     :root{
-      --cardBorder: rgba(255,255,255,.12);
-      --muted: rgba(255,255,255,.75);
-      --muted2: rgba(255,255,255,.55);
-      --panel: rgba(0,0,0,.32);
-      --panel2: rgba(255,255,255,.04);
+      --mono-bg: #cfcfcf;
+      --mono-card: rgba(255,255,255,.75);
+      --mono-card2: rgba(255,255,255,.55);
+      --mono-border: rgba(0,0,0,.10);
+      --mono-text: #0b0b0b;
+      --mono-muted: rgba(0,0,0,.62);
+      --mono-muted2: rgba(0,0,0,.42);
+      --mono-shadow: 0 18px 50px rgba(0,0,0,.22);
+      --mono-shadow2: 0 10px 30px rgba(0,0,0,.14);
+    }
+
+    /* фон як на скріні: світло-сірий + легкі діагоналі */
+    body{
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.40) 0%, rgba(255,255,255,0) 45%),
+        linear-gradient(315deg, rgba(0,0,0,.06) 0%, rgba(0,0,0,0) 55%),
+        var(--mono-bg) !important;
+    }
+
+    /* header лишається твоїм, але робимо контрастний текст */
+    .header, .header a, .brand__name, .nav a{
+      color:#fff !important;
     }
 
     .d-wrap{
-      max-width: 1120px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 24px 16px 56px;
+      padding: 22px 16px 56px;
     }
 
-    .d-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 16px;
-    }
-
-    .d-back{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--cardBorder);
-      background: var(--panel2);
-      color:#fff;
-      text-transform:uppercase;
-      font-weight:900;
-      letter-spacing:.10em;
-      font-size:11px;
-      opacity:.9;
-    }
-    .d-back:hover{ opacity:1; }
-
-    .d-title{
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      font-weight:1000;
-      font-size:12px;
-      color:#fff;
-      opacity:.9;
-      white-space:nowrap;
-    }
-
-    .d-card{
-      border:1px solid var(--cardBorder);
-      background: var(--panel);
-      border-radius: 16px;
-      padding: 18px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .d-card::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:
-        radial-gradient(520px 360px at 20% 15%, rgba(255,255,255,.10), transparent 60%),
-        radial-gradient(520px 360px at 80% 25%, rgba(255,255,255,.06), transparent 62%);
-      opacity:.26;
-      pointer-events:none;
-    }
-
-    .d-inner{
-      position:relative;
-      z-index:1;
+    .monoGrid{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 18px;
+      align-items:start;
+      justify-items:center;
+      margin-top: 10px;
+    }
+
+    .monoLogo{
+      width: min(340px, 60vw);
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.28));
+    }
+
+    .monoCard{
+      width: min(720px, 92vw);
+      background: var(--mono-card);
+      border: 1px solid var(--mono-border);
+      border-radius: 22px;
+      padding: 18px 18px 16px;
+      box-shadow: var(--mono-shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .monoTitle{
+      font-weight: 900;
+      font-size: 24px;
+      line-height: 1.15;
+      color: var(--mono-text);
+      text-align: center;
+      margin: 2px 0 10px;
+    }
+
+    .monoSubtitle{
       text-align:center;
+      color: var(--mono-muted);
+      font-weight: 700;
+      font-size: 14px;
+      margin: 0 0 14px;
     }
 
-    .d-kicker{
-      margin:0;
+    .monoMeta{
       display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:14px;
-      text-transform:uppercase;
-      letter-spacing:0.16em;
-      font-weight:800;
-      font-size:14px;
-      line-height:18px;
-      color: rgba(255,255,255,.84);
-      text-shadow: 0 1px 2px rgba(0,0,0,.45);
-    }
-    .d-kicker::before,
-    .d-kicker::after{
-      content:"";
-      height:1px;
-      width:min(140px, 22vw);
-      background: rgba(255,255,255,.45);
-    }
-
-    .d-logo{
-      width:min(640px, 92vw);
-      margin: 0 auto;
-      filter: drop-shadow(0 22px 70px rgba(0,0,0,.75));
-    }
-
-    .d-social{
-      margin-top: 2px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:18px;
-      opacity:.9;
-    }
-    .d-social .iconCircle{
-      width:42px;height:42px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.25);
-      transition: transform .25s ease, background-color .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
-    }
-    .d-social .iconCircle svg{ width:20px;height:20px; }
-    .d-social .iconCircle:hover,
-    .d-social .iconCircle:focus-visible{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.55);
-      box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.15);
-      opacity:1;
-    }
-
-    .d-metrics{
-      display:flex;
+      justify-content: center;
+      gap: 18px;
       flex-wrap:wrap;
-      justify-content:center;
-      gap:10px 14px;
-      margin-top: 4px;
+      margin-bottom: 12px;
     }
 
-    .chip{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-      border-radius:999px;
-      padding:8px 12px;
+    .monoPill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      text-transform:uppercase;
-      font-weight:1000;
-      letter-spacing:.08em;
-      font-size:11px;
-      color: var(--muted);
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(0,0,0,.08);
+      color: var(--mono-muted);
+      font-weight: 900;
+      letter-spacing: .02em;
+      box-shadow: var(--mono-shadow2);
     }
-    .chip b{ color:#fff; letter-spacing:.02em; }
+    .monoPill b{ color: var(--mono-text); }
 
-    .d-progress{
+    .monoBarWrap{
       margin-top: 6px;
-      text-align:left;
     }
-    .d-progressTop{
+
+    .monoBarTop{
       display:flex;
       justify-content:space-between;
       align-items:baseline;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-      color:#fff;
-      font-weight:1000;
-      text-transform:uppercase;
-      letter-spacing:.10em;
-      font-size:12px;
-      opacity:.92;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-weight: 900;
+      color: var(--mono-muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .10em;
     }
-    .d-progressTop .muted{ color: var(--muted2); font-weight:900; }
+    .monoBarTop #pct{
+      color: var(--mono-text);
+      letter-spacing: .06em;
+    }
 
-    .bar{
-      height: 12px;
+    .monoBar{
+      height: 14px;
       border-radius: 999px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.35);
+      background: rgba(0,0,0,.10);
+      border: 1px solid rgba(0,0,0,.10);
       overflow:hidden;
-      position:relative;
+      position: relative;
     }
-    .bar__fill{
+    .monoFill{
       height:100%;
       width:0%;
-      background: rgba(255,255,255,.80);
-      box-shadow: 0 10px 30px rgba(255,255,255,.10);
-      transition: width .6s ease;
+      background: rgba(255,255,255,.98);
+      border-right: 1px solid rgba(0,0,0,.10);
+      transition: width .65s ease;
     }
 
-    .d-cta{
+    .monoBtn{
       margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .btnMono{
-      display:inline-flex;
+      width: 100%;
+      display:flex;
       align-items:center;
       justify-content:center;
-      width:100%;
-      padding: 14px 18px;
+      gap: 12px;
+      padding: 16px 18px;
       border-radius: 999px;
-      background: #fff;
-      color:#000;
-      font-weight:1000;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      border:1px solid rgba(0,0,0,.10);
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(0,0,0,.10);
+      color: var(--mono-text);
+      font-weight: 1000;
+      text-transform: none;
+      letter-spacing: .04em;
+      box-shadow: var(--mono-shadow2);
+      transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease;
     }
-    .btnMono:hover,
-    .btnMono:focus-visible{
+    .monoBtn:hover, .monoBtn:focus-visible{
       transform: translateY(-2px);
-      box-shadow: 0 24px 78px rgba(0,0,0,.62);
-      opacity: .98;
+      background: rgba(255,255,255,1);
+      box-shadow: 0 16px 40px rgba(0,0,0,.18);
     }
-    .btnMono:active{ transform: translateY(0); }
+    .monoBtn:active{ transform: translateY(0); }
 
-    .d-updated{
-      margin-top: 8px;
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-weight:900;
+    .monoBtnIcon{
+      width: 22px;
+      height: 22px;
+      opacity: .9;
     }
+
+    .monoUpdated{
+      margin-top: 10px;
+      text-align:center;
+      color: var(--mono-muted2);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .06em;
+    }
+
+    /* соц-ряд як на скріні — чорні іконки */
+    .monoSocial{
+      margin-top: 12px;
+      display:flex;
+      justify-content:center;
+      gap: 14px;
+    }
+    .monoSocial a{
+      display:inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items:center;
+      justify-content:center;
+      color: #111;
+      opacity: .85;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+    .monoSocial a:hover{
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+    .monoSocial svg{ width: 22px; height: 22px; fill: currentColor; }
 
     @media (max-width: 767px){
-      .d-wrap{ padding: 18px 12px 46px; }
-      .d-kicker{ font-size:13px; letter-spacing:.14em; }
-      .d-social{ gap:14px; }
-      .d-social .iconCircle{ width:38px;height:38px; }
-      .d-logo{ width:min(520px, 96vw); }
+      .monoTitle{ font-size: 20px; }
+      .monoCard{ padding: 16px 14px 14px; border-radius: 20px; }
+      .monoLogo{ width: min(280px, 70vw); }
     }
   </style>
 </head>
 
 <body>
-
-<header class="header">
-  <div class="header__inner">
-    <a href="/" class="brand" aria-label="На головну">
-      <span class="brand__name">СОБАКИ ШУКАКИ</span>
-    </a>
-    <nav class="nav" aria-label="Головне меню">
-      <a href="/#about">Про підрозділ</a>
-      <a href="/#values">Цінності</a>
-      <a href="/donaty">Донати</a>
-    </nav>
-  </div>
-</header>
-
-<main class="d-wrap">
-  <div class="d-top">
-    <a class="d-back" href="/">← На головну</a>
-    <div class="d-title">Актуальний збір</div>
-  </div>
-
-  <section class="d-card" aria-label="Актуальний збір">
-    <div class="d-inner">
-      <p class="d-kicker">Підрозділ безпілотних систем</p>
-
-      <img class="d-logo" src="/logo.png" alt="Собаки Шукаки">
-
-      <!-- соц-іконки -->
-      <div class="d-social" aria-label="Соціальні мережі">
-        <a class="iconCircle" href="https://instagram.com/shukaki_sobaki" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/>
-            <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
-            <path d="M18 6.2a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
-          </svg>
-        </a>
-
-        <a class="iconCircle" href="http://www.facebook.com/sobaki.shukaki" aria-label="Facebook" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M13.5 22v-8h2.7l.4-3H13.5V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.7-.1-1.6-.2-2.7-.2-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.5v8h4z"/>
-          </svg>
-        </a>
-
-        <a class="iconCircle" href="http://www.tiktok.com/@sobaki_shukaki" aria-label="TikTok" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M16.5 3c.6 2.7 2.3 4.4 5 5v3.4c-1.9.1-3.6-.5-5.1-1.6v6.8c0 4-3.2 7.2-7.2 7.2S2 20.6 2 16.6s3.2-7.2 7.2-7.2c.4 0 .8 0 1.2.1v3.8c-.4-.1-.8-.2-1.2-.2-2 0-3.5 1.6-3.5 3.5S7.3 20 9.2 20s3.5-1.6 3.5-3.5V3h3.8z"/>
-          </svg>
-        </a>
-
-        <a class="iconCircle" href="https://t.me/+bMUnarod-Kw3Mzdi" aria-label="Telegram" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M21.6 4.6 3.4 11.6c-1 .4-.9 1.8.2 2.1l4.3 1.3 1.6 5.1c.3 1 1.6 1.2 2.2.4l2.5-3 4.7 3.5c.8.6 1.9.1 2.1-.9l2.9-14.1c.2-1-.8-1.9-1.8-1.4zM9.3 14.6l8.6-7.1c.2-.2.6.1.4.3l-7.2 8.1-.3 3.2-1.4-4.5z"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="d-metrics" aria-label="Параметри збору">
-        <div class="chip">ЦІЛЬ: <b id="goalUah">—</b></div>
-        <div class="chip">ЗІБРАНО: <b id="raisedUah">—</b></div>
-      </div>
-
-      <div class="d-progress" aria-label="Прогрес">
-        <div class="d-progressTop">
-          <span id="titleText">Збір активний</span>
-          <span class="muted"><span id="pct">0</span>%</span>
-        </div>
-        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div class="bar__fill" id="fill"></div>
-        </div>
-      </div>
-
-      <div class="d-cta">
-        <a class="btnMono" id="monoBtn" href="https://send.monobank.ua/jar/4g2vud36xP" target="_blank" rel="noopener">
-          ПІДТРИМАТИ ЧЕРЕЗ MONOBANK
-        </a>
-      </div>
-
-      <div class="d-updated" id="updatedText"></div>
+  <header class="header">
+    <div class="header__inner">
+      <a href="/" class="brand" aria-label="На головну">
+        <span class="brand__name">СОБАКИ ШУКАКИ</span>
+      </a>
+      <nav class="nav" aria-label="Головне меню">
+        <a href="/#about">Про підрозділ</a>
+        <a href="/#values">Цінності</a>
+        <a href="/donaty">Донати</a>
+      </nav>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer class="footer">
-  <div class="footer__inner">
-    <div>Собаки Шукаки</div>
-    <div>© <span id="y"></span></div>
-  </div>
-</footer>
+  <main class="d-wrap">
+    <div class="monoGrid">
+      <img class="monoLogo" src="/logo.png" alt="Собаки Шукаки">
 
-<script>
-  const DATA_URL = "/donaty/donaty.json";
+      <section class="monoCard" aria-label="Актуальний збір">
+        <h1 class="monoTitle" id="titleText">Збір активний</h1>
+        <p class="monoSubtitle">Підтримай підрозділ безпілотних систем</p>
 
-  const fmt = (n) =>
-    new Intl.NumberFormat("uk-UA").format(Math.round(n)) + " грн";
+        <div class="monoMeta" aria-label="Суми збору">
+          <div class="monoPill">Ціль: <b id="goalUah">—</b></div>
+          <div class="monoPill">Зібрано: <b id="raisedUah">—</b></div>
+        </div>
 
-  function formatUpdated(iso){
-    try{
-      const d = new Date(iso);
-      if (isNaN(d.getTime())) return "";
-      return "Оновлено: " + d.toLocaleString("uk-UA", { hour: "2-digit", minute:"2-digit", day:"2-digit", month:"2-digit", year:"numeric" });
-    } catch { return ""; }
-  }
+        <div class="monoBarWrap" aria-label="Прогрес">
+          <div class="monoBarTop">
+            <span>Прогрес</span>
+            <span><span id="pct">0</span>%</span>
+          </div>
+          <div class="monoBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="monoFill" id="fill"></div>
+          </div>
+        </div>
 
-  async function loadDonation() {
-    try {
-      const r = await fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" });
-      if (!r.ok) throw new Error("JSON not found: " + r.status);
-      const data = await r.json();
+        <a class="monoBtn" id="monoBtn" href="https://send.monobank.ua/jar/4g2vud36xP" target="_blank" rel="noopener">
+          <svg class="monoBtnIcon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
+          </svg>
+          Поповнити Банку
+        </a>
 
-      document.getElementById("titleText").textContent = data.title || "Збір активний";
-      document.getElementById("goalUah").textContent = fmt(data.goal || 0);
-      document.getElementById("raisedUah").textContent = fmt(data.raised || 0);
+        <div class="monoSocial" aria-label="Соціальні мережі">
+          <a href="https://instagram.com/shukaki_sobaki" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/>
+              <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+              <path d="M18 6.2a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
+            </svg>
+          </a>
 
-      const pctRaw = (data.goal > 0) ? (data.raised / data.goal) * 100 : 0;
-      const pct = Math.max(0, Math.min(100, pctRaw || 0));
+          <a href="http://www.facebook.com/sobaki.shukaki" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13.5 22v-8h2.7l.4-3H13.5V9.1c0-.9.3-1.6 1.7-1.6h1.5V4.8c-.7-.1-1.6-.2-2.7-.2-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.5v8h4z"/>
+            </svg>
+          </a>
 
-      document.getElementById("pct").textContent = (pct < 10 ? pct.toFixed(1) : pct.toFixed(0));
-      document.getElementById("fill").style.width = pct.toFixed(2) + "%";
+          <a href="http://www.tiktok.com/@sobaki_shukaki" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M16.5 3c.6 2.7 2.3 4.4 5 5v3.4c-1.9.1-3.6-.5-5.1-1.6v6.8c0 4-3.2 7.2-7.2 7.2S2 20.6 2 16.6s3.2-7.2 7.2-7.2c.4 0 .8 0 1.2.1v3.8c-.4-.1-.8-.2-1.2-.2-2 0-3.5 1.6-3.5 3.5S7.3 20 9.2 20s3.5-1.6 3.5-3.5V3h3.8z"/>
+            </svg>
+          </a>
 
-      const bar = document.querySelector(".bar[role='progressbar']");
-      if (bar) bar.setAttribute("aria-valuenow", pct.toFixed(0));
+          <a href="https://t.me/+bMUnarod-Kw3Mzdi" aria-label="Telegram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21.6 4.6 3.4 11.6c-1 .4-.9 1.8.2 2.1l4.3 1.3 1.6 5.1c.3 1 1.6 1.2 2.2.4l2.5-3 4.7 3.5c.8.6 1.9.1 2.1-.9l2.9-14.1c.2-1-.8-1.9-1.8-1.4zM9.3 14.6l8.6-7.1c.2-.2.6.1.4.3l-7.2 8.1-.3 3.2-1.4-4.5z"/>
+            </svg>
+          </a>
+        </div>
 
-      const monoBtn = document.getElementById("monoBtn");
-      if (monoBtn && data.mono_url) monoBtn.href = data.mono_url;
+        <div class="monoUpdated" id="updatedText"></div>
+      </section>
+    </div>
+  </main>
 
-      const upd = document.getElementById("updatedText");
-      if (upd && data.updated_at) upd.textContent = formatUpdated(data.updated_at);
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>Собаки Шукаки</div>
+      <div>© <span id="y"></span></div>
+    </div>
+  </footer>
 
-    } catch (e) {
-      console.error("Donation load error:", e);
-      document.getElementById("titleText").textContent = "Збір тимчасово недоступний";
+  <script>
+    const DATA_URL = "/donaty/donaty.json";
+
+    const fmt = (n) =>
+      new Intl.NumberFormat("uk-UA").format(Math.round(n)) + " грн";
+
+    function formatUpdated(iso){
+      try{
+        const d = new Date(iso);
+        if (isNaN(d.getTime())) return "";
+        return "Оновлено: " + d.toLocaleString("uk-UA", {
+          day:"2-digit", month:"2-digit", year:"numeric",
+          hour:"2-digit", minute:"2-digit"
+        });
+      } catch { return ""; }
     }
-  }
 
-  loadDonation();
-  document.getElementById("y").textContent = new Date().getFullYear();
-</script>
+    async function loadDonation(){
+      try{
+        const r = await fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" });
+        if(!r.ok) throw new Error("JSON not found: " + r.status);
+        const data = await r.json();
 
+        const title = (data.title || "Збір активний").toString();
+        const goal = Number(data.goal || 0);
+        const raised = Number(data.raised || 0);
+        const monoUrl = (data.mono_url || "").toString();
+
+        document.getElementById("titleText").textContent = title;
+        document.getElementById("goalUah").textContent = fmt(goal);
+        document.getElementById("raisedUah").textContent = fmt(raised);
+
+        const pctRaw = goal > 0 ? (raised / goal) * 100 : 0;
+        const pct = Math.max(0, Math.min(100, pctRaw || 0));
+
+        document.getElementById("pct").textContent = (pct < 10 ? pct.toFixed(1) : pct.toFixed(0));
+        document.getElementById("fill").style.width = pct.toFixed(2) + "%";
+
+        const bar = document.querySelector(".monoBar[role='progressbar']");
+        if (bar) bar.setAttribute("aria-valuenow", pct.toFixed(0));
+
+        const monoBtn = document.getElementById("monoBtn");
+        if (monoBtn && monoUrl) monoBtn.href = monoUrl;
+
+        const upd = document.getElementById("updatedText");
+        if (upd && data.updated_at) upd.textContent = formatUpdated(data.updated_at);
+
+      } catch(e){
+        console.error("Donation load error:", e);
+        document.getElementById("titleText").textContent = "Збір тимчасово недоступний";
+      }
+    }
+
+    loadDonation();
+    document.getElementById("y").textContent = String(new Date().getFullYear());
+  </script>
 </body>
 </html>
