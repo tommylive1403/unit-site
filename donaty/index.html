@@ -330,8 +330,6 @@
         const data = await r.json();
 
         const title = (data.title || "Збір активний").toString();
-        const goal = Number(data.goal || 0);
-        const raised = Number(data.raised || 0);
         const monoUrl = (data.mono_url || "").toString();
 
         document.getElementById("titleText").textContent = title;
@@ -364,6 +362,7 @@
   </script>
 </body>
 </html>
+
 
 
 
