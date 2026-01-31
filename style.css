@@ -814,3 +814,118 @@ body::after{
 @media (max-width: 640px){
   #fx-noise{ opacity: .14; }
 }
+/* ===== DONATE SECTION (main page) ===== */
+
+.payGrid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.payCard{
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 18px;
+  background: rgba(0,0,0,.18);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+
+.payCard__title{
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 4px;
+  color: #fff;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.payCard__desc{
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.muted{ opacity: .7; }
+
+/* кнопка як у тебе на скріні */
+.btn.btn--wide{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payThanks{
+  margin-top: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  opacity: .85;
+}
+
+/* рядки з реквізитами */
+.payLine{
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+  margin-top: 10px;
+}
+
+.payLine__k{
+  font-weight: 900;
+  opacity: .75;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 11px;
+}
+
+.payLine__v{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.payLine code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 13px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+/* copy кнопка */
+.copy{
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-weight: 900;
+  transition: transform .18s ease, background-color .18s ease, border-color .18s ease;
+}
+
+.copy:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.28);
+}
+
+.copy.sm{
+  padding: 6px 10px;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+/* mobile */
+@media (max-width: 900px){
+  .payGrid{ grid-template-columns: 1fr; }
+}
