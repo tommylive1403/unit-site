@@ -184,18 +184,14 @@
     <div class="monoGrid">
       <img class="monoLogo" src="/logo.png" alt="Собаки Шукаки">
 
-      <section class="monoCard" aria-label="Актуальний збір">
-        <h1 class="monoTitle" id="titleText">Збір активний</h1>
-        <p class="monoSubtitle">Збір на поточні витрати підрозділу: ремонт дронів, авто і т.п.</p>
+     <section class="monoCard" aria-label="Збори">
+  <h1 class="monoTitle">Донати</h1>
+  <p class="monoSubtitle">Оберіть збір і відкрийте банку в 1 клік</p>
 
-        <a class="monoBtn" id="monoBtn" href="https://send.monobank.ua/jar/4g2vud36xP" target="_blank" rel="noopener">
-          <svg class="monoBtnIcon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
-          </svg>
-          Поповнити Банку
-        </a>
+  <div id="donationsList" style="display:grid; gap:12px; margin-top:12px;"></div>
 
-        <div class="monoThanks">Дякуємо 🇺🇦</div>
+  <div class="monoThanks">Дякуємо ❤️</div>
+</section>
 
         <div class="monoSocial" aria-label="Соціальні мережі">
           <a href="https://instagram.com/shukaki_sobaki" aria-label="Instagram" target="_blank" rel="noopener">
@@ -235,34 +231,67 @@
     </div>
   </footer>
 
-  <script>
-    const DATA_URL = "/donaty/donaty.json";
+ <script>
+  const DATA_URL = "/donaty/donaty.json";
 
-    async function loadDonation(){
-      try{
-        const r = await fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" });
-        if(!r.ok) throw new Error("JSON not found: " + r.status);
-        const data = await r.json();
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, (m) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[m]));
+  }
 
-        const title = (data.title || "Збір активний").toString();
-        const monoUrl = (data.mono_url || "").toString();
+  async function loadDonations(){
+    try{
+      const r = await fetch(DATA_URL + "?v=" + Date.now(), { cache: "no-store" });
+      if(!r.ok) throw new Error("JSON not found: " + r.status);
+      const data = await r.json();
 
-        document.getElementById("titleText").textContent = title;
+      const list = Array.isArray(data.donations) ? data.donations : [];
+      const root = document.getElementById("donationsList");
 
-        const monoBtn = document.getElementById("monoBtn");
-        if (monoBtn && monoUrl) monoBtn.href = monoUrl;
+      if(!root) return;
 
-      } catch(e){
-        console.error("Donation load error:", e);
-        document.getElementById("titleText").textContent = "Збір тимчасово недоступний";
+      if(list.length === 0){
+        root.innerHTML = `<div style="color:rgba(0,0,0,.6); font-weight:800;">Зборів поки немає</div>`;
+        return;
       }
-    }
 
-    loadDonation();
-    document.getElementById("y").textContent = String(new Date().getFullYear());
-  </script>
+      root.innerHTML = list.map((d) => {
+        const title = esc(d.title || "Збір");
+        const url = esc(d.mono_url || "#");
+
+        return `
+          <div style="
+            background: rgba(255,255,255,.55);
+            border: 1px solid rgba(0,0,0,.10);
+            border-radius: 18px;
+            padding: 14px 14px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.10);
+            text-align:center;
+          ">
+            <div style="font-weight:1000; color:#0b0b0b; font-size:18px; line-height:1.15; margin-bottom:10px;">
+              ${title}
+            </div>
+
+            <a class="monoBtn" href="${url}" target="_blank" rel="noopener" style="margin-top:0;">
+              <svg class="monoBtnIcon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
+              </svg>
+              Поповнити Банку
+            </a>
+          </div>
+        `;
+      }).join("");
+
+    } catch(e){
+      console.error("Donations load error:", e);
+      const root = document.getElementById("donationsList");
+      if(root) root.innerHTML = `<div style="font-weight:900; color:#0b0b0b;">Збір тимчасово недоступний</div>`;
+    }
+  }
+
+  loadDonations();
+  document.getElementById("y").textContent = String(new Date().getFullYear());
+</script>
 </body>
 </html>
-
-
-
