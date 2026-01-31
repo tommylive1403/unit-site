@@ -1,11 +1,13 @@
 {
   "donations": [
     {
-      "title": "Збір на ремонт авто",
+      "title": "Постійна банка підтримки",
+      "subtitle": "Збір на поточні витрати підрозділу: ремонт дронів, авто і т.п.",
       "mono_url": "https://send.monobank.ua/jar/4g2vud36xP"
     },
     {
-      "title": "ЗБІР НА НРК",
+      "title": "Збір на НРК",
+      "subtitle": "Наземний роботизований комплекс (логістика / евакуація).",
       "mono_url": "https://send.monobank.ua/jar/9cZr3tKqrK"
     }
   ]
