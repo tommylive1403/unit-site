@@ -492,59 +492,102 @@ img{max-width:100%;display:block}
 /* =========================================================
    DONATE
    ========================================================= */
-.donate2{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.payCard{
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(0,0,0,.40);
-  border-radius:18px;
-  padding:24px;
-  transition: all 0.3s ease;
+.support{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 16px;
 }
-.payCard:hover {
-  border-color: rgba(0, 120, 255, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 120, 255, 0.1);
+
+.supportTitle{
+  text-align: center;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 32px;
 }
-.payCard__top{display:flex;gap:16px;align-items:flex-start}
-.payCard__icon{
-  width:36px;height:36px;border-radius:10px;
-  border:1px solid rgba(255,255,255,.14);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;color:#fff;opacity:.85;
-  background:rgba(0,120,255,.1);
-  font-size: 18px;
+
+.supportGrid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
-.payCard__title{font-weight:700;font-size:20px}
-.payCard__desc{margin-top:4px;font-size:14px}
-.payLine{
-  margin-top:16px;
-  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+
+.supportCard{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
 }
-.payLine__k{color:var(--muted);min-width:70px;font-weight:500}
-.payLine__v code{color:#fff;font-size:13px}
-.copy{
-  border-radius:8px;
-  padding:6px 12px;
-  border:1px solid rgba(255,255,255,.12);
-  background:transparent;
-  color:rgba(255,255,255,.7);
-  font-weight:500;
-  font-size:10px;
-  cursor:pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
+
+.supportHead{
+  display:flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  font-weight: 800;
+  margin-bottom: 14px;
 }
-.copy:hover {
-  background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.25);
-  color: #fff;
+
+.supportHead small{
+  opacity:.6;
+  font-size: 12px;
 }
-.copy.copied {
-  color: #22c55e;
-  border-color: rgba(34, 197, 94, 0.4);
+
+.supportBtn{
+  display:block;
+  width:100%;
+  padding:14px;
+  border-radius: 999px;
+  font-weight: 900;
+  margin-bottom: 10px;
 }
-.copy.sm{padding:5px 10px;font-size:11px}
+
+.supportBtn.primary{
+  background:#fff;
+  color:#000;
+}
+
+.supportSub,
+.supportThanks{
+  font-size: 13px;
+  opacity:.7;
+}
+
+.supportCopy{
+  display:flex;
+  gap: 8px;
+  align-items:center;
+  justify-content: space-between;
+  background: rgba(0,0,0,.35);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.supportCopy span{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.supportCopy button{
+  background:#fff;
+  color:#000;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 800;
+}
+
+.supportNote{
+  margin-top: 8px;
+  font-size: 12px;
+  opacity:.6;
+}
+
+@media (max-width: 900px){
+  .supportGrid{
+    grid-template-columns: 1fr;
+  }
+}
 
 .joinSocial{
   margin-top:32px;
