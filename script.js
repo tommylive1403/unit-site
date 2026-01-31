@@ -193,3 +193,27 @@
   addEventListener("resize", resize, { passive: true });
   requestAnimationFrame(loop);
 })();
+ 
+// === Copy-to-clipboard for Support block ===
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-copy]");
+  if (!btn) return;
+
+  const id = btn.dataset.copy;
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const text = el.textContent.trim();
+  if (!text) return;
+
+  navigator.clipboard.writeText(text);
+
+  const old = btn.textContent;
+  btn.textContent = "Готово ✓";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.textContent = old;
+    btn.disabled = false;
+  }, 1200);
+});
