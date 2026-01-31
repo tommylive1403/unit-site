@@ -193,62 +193,68 @@
 <section class="support">
   <h2 class="supportTitle">Підтримати підрозділ</h2>
 
-  <div class="supportGrid">
+  <div class="payGrid">
 
-    <!-- 1. MONO -->
-    <div class="supportCard">
-      <div class="supportHead">
-        <span>Monobank</span>
-      </div>
+  <!-- 1️⃣ MONOBANK -->
+  <div class="payCard">
+    <div class="payCard__title">Монобанка</div>
 
-      <a href="/donaty" class="supportBtn primary">
-        Постійна банка
-      </a>
+    <a class="btn btn--primary btn--wide"
+       href="https://send.monobank.ua/jar/4g2vud36xP"
+       rel="noopener"
+       target="_blank">
+      Постійна банка
+    </a>
 
-      <div class="supportThanks">Дякуємо ❤️</div>
-    </div>
-
-    <!-- 2. IBAN -->
-    <div class="supportCard">
-      <div class="supportHead">
-      <div class="payTitle">Картка / IBAN</div>
-      <div class="payHint">копіювання в 1 тап</div>
-    </div>
-
-    <div class="supportCopy">
-      <div class="copyLabel">IBAN</div>
-      <div class="copyValue" id="ibanText">UA27 322001 00000 2620 7334 6683 70</div>
-      <button class="copyBtn" type="button" data-copy-target="ibanText">Скопіювати</button>
-    </div>
-
-    <div class="supportCopy">
-      <div class="copyLabel">Картка</div>
-      <div class="copyValue" id="cardText">5375 4112 0298 2067</div>
-      <button class="copyBtn" type="button" data-copy-target="cardText">Скопіювати</button>
-    </div>
-
-    <div class="payNote">Для переказів з інших банків/з-за кордону</div>
+    <div class="payThanks">Дякуємо ❤️</div>
   </div>
 
-    <!-- 3. CRYPTO -->
-    <div class="supportCard">
-      <div class="supportHead">
-        <span>Крипта (USDT)</span>
-      </div>
-
-      <div class="supportCopy">
-        <span id="usdtMain">TCJjyNGFQf6fz8Rg4yBBNBPxCtodDkrj6w</span>
-        <button data-copy="usdtMain">Скопіювати</button>
-      </div>
-
-      <div class="supportNote">
-        Мережа: <b>TRC20</b>
-      </div>
+  <!-- 2️⃣ КАРТКА / IBAN -->
+  <div class="payCard">
+    <div class="payCard__desc muted">
+      Картка та IBAN для переказу.
     </div>
 
-  </div>
-</section>
+    <div class="payLine">
+      <div class="payLine__k">Картка:</div>
+      <div class="payLine__v">
+        <code id="cardMain">5375 4112 0298 2067</code>
+      </div>
+      <button class="copy sm" data-copy="cardMain" type="button">
+        Copy
+      </button>
+    </div>
 
+    <div class="payLine">
+      <div class="payLine__k">IBAN:</div>
+      <div class="payLine__v">
+        <code id="ibanMain">UA27 322001 00000 2620 7334 6683 70</code>
+      </div>
+      <button class="copy sm" data-copy="ibanMain" type="button">
+        Copy
+      </button>
+    </div>
+  </div>
+
+  <!-- 3️⃣ CRYPTO -->
+  <div class="payCard">
+    <div class="payCard__title">Крипта</div>
+    <div class="payCard__desc muted">USDT</div>
+
+    <div class="payLine">
+      <div class="payLine__k">USDT TRC20:</div>
+      <div class="payLine__v">
+        <code id="usdtMain">
+          TCJjyNGFQf6fz8Rg4yBBNBPxCtodDkrj6w
+        </code>
+      </div>
+      <button class="copy sm" data-copy="usdtMain" type="button">
+        Copy
+      </button>
+    </div>
+  </div>
+
+</div>
 </div>
 </div>
 </div>
