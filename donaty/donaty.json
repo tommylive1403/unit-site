@@ -1,5 +1,12 @@
 {
-  "title": "Постійна банка підтримки",
-  "mono_url": "https://send.monobank.ua/jar/4g2vud36xP"
+  "donations": [
+    {
+      "title": "Збір на ремонт авто",
+      "mono_url": "https://send.monobank.ua/jar/4g2vud36xP"
+    },
+    {
+      "title": "ЗБІР НА НРК",
+      "mono_url": "https://send.monobank.ua/jar/9cZr3tKqrK"
+    }
+  ]
 }
-
