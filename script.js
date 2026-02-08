@@ -1,122 +1,26 @@
-/* =========================================================
-   SOBАKI SHUKAKI — script.js (CLEAN)
-   - Year in footer
-   - Copy-to-clipboard (correct: copies textContent by id)
-   - Header scroll effect
-   - Scroll-to-top button
-   - Smooth scroll for anchors
-   - Animate on scroll
-   - Noise canvas effect
-   - Meta Pixel events (ViewContent / InitiateCheckout / Lead / Social clicks)
-   ========================================================= */
-
-/* =========================
-   Helpers
-   ========================= */
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-
-/* =========================
-   Meta Pixel safe wrappers
-   ========================= */
-function fbqTrack(eventName, params) {
-  try {
-    if (typeof window.fbq === "function") {
-      window.fbq("track", eventName, params || {});
-    }
-  } catch (_) {}
-}
-function fbqCustom(eventName, params) {
-  try {
-    if (typeof window.fbq === "function") {
-      window.fbq("trackCustom", eventName, params || {});
-    }
-  } catch (_) {}
-}
-
-/* =========================
-   Main UI logic
-   ========================= */
 (() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
   // Year in footer
   const y = $("#y");
   if (y) y.textContent = String(new Date().getFullYear());
 
-  // Header scroll effect
-  const header = $(".header");
-  const handleHeaderScroll = () => {
-    if (window.scrollY > 50) header?.classList.add("scrolled");
-    else header?.classList.remove("scrolled");
-  };
-  window.addEventListener("scroll", handleHeaderScroll, { passive: true });
-  handleHeaderScroll();
-
-  // Scroll to top button
-  const scrollTopBtn = $("#scrollTop");
-  const handleScrollTopVisibility = () => {
-    if (window.scrollY > 400) scrollTopBtn?.classList.add("visible");
-    else scrollTopBtn?.classList.remove("visible");
-  };
-  window.addEventListener("scroll", handleScrollTopVisibility, { passive: true });
-  handleScrollTopVisibility();
-
-  scrollTopBtn?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  // Smooth scroll for navigation links (#anchors)
-  $$("a[href^='#']").forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const href = link.getAttribute("href");
-      if (!href || href === "#") return;
-
-      const target = $(href);
-      if (!target) return;
-
-      e.preventDefault();
-      const headerHeight = header?.offsetHeight || 68;
-      const targetPosition =
-        target.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-      window.scrollTo({ top: targetPosition, behavior: "smooth" });
-    });
-  });
-
-  // Animate on scroll
-  const animateOnScroll = () => {
-    const elements = $$(".animate-on-scroll");
-    const windowHeight = window.innerHeight;
-
-    elements.forEach((el) => {
-      const elementTop = el.getBoundingClientRect().top;
-      const elementVisible = 150;
-
-      if (elementTop < windowHeight - elementVisible) {
-        el.classList.add("animated");
-      }
-    });
-  };
-
-  window.addEventListener("scroll", animateOnScroll, { passive: true });
-  document.addEventListener("DOMContentLoaded", animateOnScroll);
-  // Trigger on load a few times
-  animateOnScroll();
-  setTimeout(animateOnScroll, 100);
-  setTimeout(animateOnScroll, 300);
-})();
-
-/* =========================
-   Copy-to-clipboard (correct)
-   Copies textContent from element id in data-copy
-   Tracks: Lead + CopyRequisites
-   ========================= */
-(() => {
-  async function copyText(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (_) {
+  // Copy buttons
+  $$(".copy[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.getAttribute("data-copy") || "";
       try {
+        await navigator.clipboard.writeText(text);
+        const prev = btn.textContent;
+        btn.textContent = "✔";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.classList.remove("copied");
+        }, 1200);
+      } catch {
+        // fallback
         const ta = document.createElement("textarea");
         ta.value = text;
         ta.style.position = "fixed";
@@ -125,172 +29,87 @@ function fbqCustom(eventName, params) {
         ta.select();
         document.execCommand("copy");
         ta.remove();
-        return true;
-      } catch (_) {
-        return false;
+        const prev = btn.textContent;
+        btn.textContent = "✔";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.classList.remove("copied");
+        }, 1200);
       }
-    }
-  }
-
-  $$(".copy[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      e.preventDefault();
-
-      const id = btn.getAttribute("data-copy");
-      if (!id) return;
-
-      const el = document.getElementById(id);
-      const text = (el?.textContent || "").trim();
-      if (!text) return;
-
-      const ok = await copyText(text);
-
-      const prev = btn.textContent;
-      btn.textContent = ok ? "✔" : "✖";
-      btn.classList.toggle("copied", ok);
-
-      // Track copy action (no sensitive data)
-      fbqTrack("Lead", {
-        content_name: "Copy Requisites",
-        field: id,
-        page: window.location.pathname,
-      });
-      fbqCustom("CopyRequisites", {
-        field: id,
-        page: window.location.pathname,
-      });
-
-      setTimeout(() => {
-        btn.textContent = prev;
-        btn.classList.remove("copied");
-      }, 1200);
     });
   });
-})();
 
-/* =========================
-   Meta Pixel events
-   - ViewContent: when #donate becomes visible
-   - InitiateCheckout: click on Monobank / donate links
-   - Contact: click on social links
-   ========================= */
-(() => {
-  function getHost(url) {
-    try {
-      return new URL(url, window.location.href)
-        .hostname.replace(/^www\./, "")
-        .toLowerCase();
-    } catch (_) {
-      return "";
+  // Header scroll effect
+  const header = $(".header");
+  const handleHeaderScroll = () => {
+    if (window.scrollY > 50) {
+      header?.classList.add("scrolled");
+    } else {
+      header?.classList.remove("scrolled");
     }
-  }
+  };
+  window.addEventListener("scroll", handleHeaderScroll, { passive: true });
+  handleHeaderScroll();
 
-  function classifySocial(url) {
-    const host = getHost(url);
-    if (host.includes("instagram.com")) return "instagram";
-    if (host.includes("facebook.com") || host.includes("fb.com")) return "facebook";
-    if (host.includes("tiktok.com")) return "tiktok";
-    if (host === "t.me" || host.endsWith(".t.me")) return "telegram";
-    return null;
-  }
-
-  function classifyDonate(url) {
-    const host = getHost(url);
-    const lower = (url || "").toLowerCase();
-
-    if (host.includes("send.monobank.ua") && lower.includes("/jar/")) return "monobank_jar";
-    if (host.includes("monobank.ua")) return "monobank";
-
-    // optional future providers
-    if (host.includes("binance.com") || host.includes("okx.com") || host.includes("whitebit.com")) {
-      return "crypto_exchange";
+  // Scroll to top button
+  const scrollTopBtn = $("#scrollTop");
+  const handleScrollTopVisibility = () => {
+    if (window.scrollY > 400) {
+      scrollTopBtn?.classList.add("visible");
+    } else {
+      scrollTopBtn?.classList.remove("visible");
     }
+  };
+  window.addEventListener("scroll", handleScrollTopVisibility, { passive: true });
+  
+  scrollTopBtn?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
-    return null;
-  }
-
-  function placementOfLink(a) {
-    if (a.closest(".socialRow--heroCenter")) return "hero";
-    if (a.closest(".socialRow--big")) return "footer";
-    if (a.closest("nav")) return "nav";
-    return "other";
-  }
-
-  // ViewContent: Donate section visible
-  document.addEventListener("DOMContentLoaded", function () {
-    const donateSection = document.querySelector("#donate");
-    if (!donateSection || !("IntersectionObserver" in window)) return;
-
-    let fired = false;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!fired && entry.isIntersecting) {
-            fired = true;
-            fbqTrack("ViewContent", {
-              content_name: "Donate Section",
-              page: window.location.pathname,
-            });
-            io.disconnect();
-          }
+  // Smooth scroll for navigation links
+  $$("a[href^='#']").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      if (href && href !== "#") {
+        const target = $(href);
+        if (target) {
+          e.preventDefault();
+          const headerHeight = header?.offsetHeight || 68;
+          const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+          window.scrollTo({ top: targetPosition, behavior: "smooth" });
         }
-      },
-      { threshold: 0.35 }
-    );
-
-    io.observe(donateSection);
+      }
+    });
   });
 
-  // Click tracking (social + donate)
-  document.addEventListener("click", function (e) {
-    const a = e.target.closest("a");
-    if (!a) return;
+  // Animate on scroll
+  const animateOnScroll = () => {
+    const elements = $$(".animate-on-scroll");
+    const windowHeight = window.innerHeight;
+    
+    elements.forEach((el) => {
+      const elementTop = el.getBoundingClientRect().top;
+      const elementVisible = 150;
+      
+      if (elementTop < windowHeight - elementVisible) {
+        el.classList.add("animated");
+      }
+    });
+  };
+  
+  window.addEventListener("scroll", animateOnScroll, { passive: true });
+  // Trigger on load - multiple times to ensure all visible elements animate
+  animateOnScroll();
+  setTimeout(animateOnScroll, 100);
+  setTimeout(animateOnScroll, 300);
+  
+  // Also trigger when DOM is fully ready
+  document.addEventListener("DOMContentLoaded", animateOnScroll);
 
-    const href = a.getAttribute("href") || "";
-    if (!href || href.startsWith("#") || href.startsWith("javascript:")) return;
-
-    // Social
-    const social = classifySocial(href);
-    if (social) {
-      fbqTrack("Contact", {
-        method: social,
-        link: href,
-      });
-
-      fbqCustom("SocialClick", {
-        platform: social,
-        placement: placementOfLink(a),
-        link: href,
-        page: window.location.pathname,
-      });
-
-      return;
-    }
-
-    // Donate
-    const donate = classifyDonate(href);
-    if (donate) {
-      fbqTrack("InitiateCheckout", {
-        content_name: "Donate Click",
-        method: donate,
-        link: href,
-      });
-
-      fbqCustom("DonateClick", {
-        method: donate,
-        placement: placementOfLink(a),
-        link: href,
-        page: window.location.pathname,
-      });
-
-      return;
-    }
-  });
 })();
 
-/* =========================
-   Noise canvas effect
-   ========================= */
+// WebGL-style noise effect
 (() => {
   const c = document.getElementById("fx-noise");
   if (!c) return;
@@ -315,10 +134,14 @@ function fbqCustom(eventName, params) {
   }
 
   function render(t) {
-    if (!ctx) return;
-
-    const tw = Math.max(180, Math.floor((innerWidth * dpr) / (3 * NOISE_SCALE)));
-    const th = Math.max(140, Math.floor((innerHeight * dpr) / (3 * NOISE_SCALE)));
+    const tw = Math.max(
+      180,
+      Math.floor((innerWidth * dpr) / (3 * NOISE_SCALE))
+    );
+    const th = Math.max(
+      140,
+      Math.floor((innerHeight * dpr) / (3 * NOISE_SCALE))
+    );
 
     const img = ctx.createImageData(tw, th);
     const data = img.data;
@@ -369,4 +192,191 @@ function fbqCustom(eventName, params) {
   resize();
   addEventListener("resize", resize, { passive: true });
   requestAnimationFrame(loop);
+})();
+ 
+// === Copy-to-clipboard for Support block ===
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-copy]");
+  if (!btn) return;
+
+  const id = btn.dataset.copy;
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const text = el.textContent.trim();
+  if (!text) return;
+
+  navigator.clipboard.writeText(text);
+
+  const old = btn.textContent;
+  btn.textContent = "Готово ✓";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.textContent = old;
+    btn.disabled = false;
+  }, 1200);
+});
+/* =========================================================
+   META PIXEL EVENTS — SOBАKI SHUKAKI
+   Потрібно: Pixel встановлений у <head> (у тебе вже є)
+
+   Події:
+   - ViewContent: коли видно секцію донату #donate
+   - InitiateCheckout: клік по Monobank / платіжному посиланню
+   - Lead: копіювання реквізитів (кнопки .copy[data-copy])
+   - Contact + SocialClick: клік по соцмережах (IG/FB/TikTok/TG)
+   ========================================================= */
+
+(function () {
+  // ---------- Safe wrappers ----------
+  function fbqTrack(eventName, params) {
+    try {
+      if (typeof window.fbq === "function") {
+        window.fbq("track", eventName, params || {});
+      }
+    } catch (_) {}
+  }
+
+  function fbqCustom(eventName, params) {
+    try {
+      if (typeof window.fbq === "function") {
+        window.fbq("trackCustom", eventName, params || {});
+      }
+    } catch (_) {}
+  }
+
+  // ---------- Helpers ----------
+  function getHost(url) {
+    try {
+      return new URL(url, window.location.href).hostname.replace(/^www\./, "").toLowerCase();
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function classifySocial(url) {
+    const host = getHost(url);
+    if (host.includes("instagram.com")) return "instagram";
+    if (host.includes("facebook.com") || host.includes("fb.com")) return "facebook";
+    if (host.includes("tiktok.com")) return "tiktok";
+    if (host === "t.me" || host.endsWith(".t.me")) return "telegram";
+    return null;
+  }
+
+  function classifyDonate(url) {
+    const host = getHost(url);
+    const lower = (url || "").toLowerCase();
+
+    // Monobank jar
+    if (host.includes("send.monobank.ua") && lower.includes("/jar/")) return "monobank_jar";
+    // Інші monobank-лінки (на майбутнє)
+    if (host.includes("monobank.ua")) return "monobank";
+    // Якщо колись додаси сторонні крипто-платформи
+    if (host.includes("binance.com") || host.includes("okx.com") || host.includes("whitebit.com")) return "crypto_exchange";
+
+    return null;
+  }
+
+  function placementOfLink(a) {
+    if (a.closest(".socialRow--heroCenter")) return "hero";
+    if (a.closest(".socialRow--big")) return "footer";
+    if (a.closest("nav")) return "nav";
+    return "other";
+  }
+
+  // ---------- 1) ViewContent: видно секцію #donate ----------
+  document.addEventListener("DOMContentLoaded", function () {
+    const donateSection = document.querySelector("#donate");
+    if (!donateSection || !("IntersectionObserver" in window)) return;
+
+    let fired = false;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!fired && entry.isIntersecting) {
+            fired = true;
+            fbqTrack("ViewContent", {
+              content_name: "Donate Section",
+              page: window.location.pathname
+            });
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    io.observe(donateSection);
+  });
+
+  // ---------- 2) Click tracking: соцмережі + донати ----------
+  document.addEventListener("click", function (e) {
+    const a = e.target.closest("a");
+    if (!a) return;
+
+    const href = a.getAttribute("href") || "";
+    if (!href || href.startsWith("#") || href.startsWith("javascript:")) return;
+
+    // --- Social links ---
+    const social = classifySocial(href);
+    if (social) {
+      // Стандартна подія (зручно для оптимізації/аудиторій)
+      fbqTrack("Contact", {
+        method: social,
+        link: href
+      });
+
+      // Кастом (зручно в Events Manager)
+      fbqCustom("SocialClick", {
+        platform: social,
+        placement: placementOfLink(a),
+        link: href,
+        page: window.location.pathname
+      });
+
+      return;
+    }
+
+    // --- Donate links ---
+    const donate = classifyDonate(href);
+    if (donate) {
+      // Найкраща конверсія для твого кейсу (бо “успішний донат” на сторонніх сервісах не видно)
+      fbqTrack("InitiateCheckout", {
+        content_name: "Donate Click",
+        method: donate,
+        link: href
+      });
+
+      fbqCustom("DonateClick", {
+        method: donate,
+        placement: placementOfLink(a),
+        link: href,
+        page: window.location.pathname
+      });
+
+      return;
+    }
+  });
+
+  // ---------- 3) Lead: Copy реквізитів ----------
+  document.addEventListener("click", function (e) {
+    const btn = e.target.closest("button.copy");
+    if (!btn) return;
+
+    const targetId = btn.getAttribute("data-copy");
+    if (!targetId) return;
+
+    // НЕ передаємо реквізити, тільки факт взаємодії
+    fbqTrack("Lead", {
+      content_name: "Copy Requisites",
+      field: targetId,
+      page: window.location.pathname
+    });
+
+    fbqCustom("CopyRequisites", {
+      field: targetId,
+      page: window.location.pathname
+    });
+  });
 })();
